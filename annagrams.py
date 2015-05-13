@@ -58,7 +58,7 @@ def strip_table(table):
     # in python, it's a bad idea to iterate over a changing list. For this
     # reason, we create a copy of the list of keys in table and iterate over
     # that, instead of over table itself.
-    keys = table.keys();
+    keys = table.keys()
 
     for key in keys:
         # all words in the list should have the same length, so we can just
