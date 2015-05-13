@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
+# location of the dictionary
 WORDS = "/usr/share/dict/words"
+
+# list of prime numbers for each letter of the alphabet
 PRIMES = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
           67, 71, 73, 79, 83, 89, 97, 101]
 
@@ -10,15 +13,21 @@ def hash_word(word):
     identical letters collide. Returns None if the word contains non-letter
     characters."""
 
+    # accumulator for this word
     total = 1
 
     for char in word:
+        # get the offset from the A character
         value = ord(char.upper()) - 65
-        if not 0 <= value <= 25:
+
+        if value > 25 or value < 0:
             # word contains a non-letter character
             return None
+
+        # accumulate the value
         total *= PRIMES[value]
 
+    # return the accumulated hash
     return total
 
 
@@ -45,6 +54,8 @@ def create_table(word_file):
         if key is None:
             continue
 
+        # add the word to the list, creating one if it doesn't exist in the
+        # table
         table[key] = table.get(key, []) + [word]
 
     # return the resulting table
@@ -90,6 +101,7 @@ def print_annagrams(table):
     """Given a hash table of annagrams, print them out. Returns None"""
 
     for words in table.values():
+        # pretty the list and print it out
         print ", ".join(words)
 
 
