@@ -14,6 +14,10 @@ def find_points(prices, window):
         if len(current_window) < window:
             current_window.append(price)
         else:
+            # there are some issues with the code below
+            # updon finding a better window, it needs to pop up to
+            # offset and then append the rest of the prices
+            # this does not happen as of yet
             if current_window[-1] - current_window[0] < \
                price - current_window[offset]:
                 current_window.pop(offset - 1)
