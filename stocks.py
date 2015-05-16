@@ -1,68 +1,74 @@
 #!/usr/bin/env python
-prices = [1.0, 2.0, 3.0, 5.1, 5.5, 8.5]
+prices = [4.0, 3.0, 2.0, 4.0, 3.0, 1.0, 1.1, 1.2, 1.3, 1.4]
 
 
-def find_points(prices, window):
-    best_window = []
-    current_window = []
-    skipped = []
-    offset = 1
+class ParserState:
+    def __init__(self, window):
+        self.best_window = []
+        self.current_window = []
+        self.skipped = []
+        self.window = window
 
-    # ideas to make this better:
-    # start our windows on increases only
-    # consider stopping them on decreases
-    # this would allow for subsets smaller than the window to be considered
-
-    for price in prices:
-        print "price:", price
-        print "best", best_window
-        print "current", current_window
-        print "skipped", skipped
-        print "offset", offset
-        print
-        if len(current_window) < window:
-            current_window.append(price)
+    def increase(self, price):
+        if not self.current_window:
+            return True
+        elif len(self.current_window) == self.window:
+            print "Full window"
+            print "Skipped:", self.skipped
+            return self.current_window[-1] - self.current_window[0] < \
+                price - self.current_window[len(self.skipped) + 1]
         else:
-            if current_window[-1] - current_window[0] < \
-               price - current_window[offset]:
-                for i in xrange(offset):
-                    current_window.pop(0)
-                current_window.extend(skipped)
-                current_window.append(price)
-                skipped = []
-                offset = 1
-            else:
-                if offset == window:
-                    # we've moved forward an entire window
-                    if not best_window or best_window[-1] - best_window[0] < \
-                       current_window[-1] - current_window[0]:
-                        best_window = current_window
-                    current_window = skipped
-                    current_window.append(price)
-                    skipped = []
-                    offset = 1
-                else:
-                    offset += 1
-                    skipped.append(price)
+            return self.current_window[-1] < price
 
-    print "best", best_window
-    print "current", current_window
-    print "skipped", skipped
-    print "offset", offset
-    print
+    def sift(self):
+        if not self.best_window or self.best_window[-1] - self.best_window[0] \
+           < self.current_window[-1] - self.current_window[0]:
+            self.best_window = self.current_window
+        self.current_window = []
 
-    if not best_window or (current_window and best_window[-1] -
-                           best_window[0] < current_window[-1] -
-                           current_window[0]):
-        best_window = current_window
+    def skip(self, price):
+        if len(self.skipped) + 1 == self.window:
+            # we've moved forward an entire window
+            self.sift()
+            self.skipped = []
+        elif not self.current_window:
+            # nothing to do in this case
+            return
+        else:
+            self.skipped.append(price)
 
-    return best_window
+    def unskip(self):
+        self.current_window.extend(self.skipped)
+
+    def trim(self):
+        while len(self.current_window) > self.window:
+            self.current_window.pop(0)
+
+    def insert(self, price):
+        if self.increase(price):
+            print "Price increase:", price
+            self.unskip()
+            self.current_window.append(price)
+            self.trim()
+        else:
+            self.skip(price)
 
 
 def main():
-    window = find_points(prices, 3)
+    parser = ParserState(3)
 
-    print window
+    for i, price in enumerate(prices):
+        if prices[max(0, i - 1)] < price or price \
+           < prices[min(i + 1, len(prices) - 1)]:
+            print "Inserting:", price
+            parser.insert(price)
+        else:
+            print "Skipping:", price
+            parser.skip(price)
+
+    parser.sift()
+
+    print parser.best_window
 
 if __name__ == "__main__":
     main()
