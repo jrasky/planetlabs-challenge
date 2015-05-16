@@ -9,6 +9,11 @@ class ParserState:
         self.skipped = []
         self.window = window
 
+    def clear(self):
+        self.best_window = []
+        self.current_window = []
+        self.skipped = []
+
     def increase(self, price):
         if not self.current_window:
             return True
@@ -53,22 +58,28 @@ class ParserState:
         else:
             self.skip(price)
 
+    def process(self, prices):
+        self.clear()
+
+        for i, price in enumerate(prices):
+            if prices[max(0, i - 1)] < price or price \
+               < prices[min(i + 1, len(prices) - 1)]:
+                print "Inserting:", price
+                self.insert(price)
+            else:
+                print "Skipping:", price
+                self.skip(price)
+
+        self.sift()
+        return self.best_window
+
 
 def main():
     parser = ParserState(3)
 
-    for i, price in enumerate(prices):
-        if prices[max(0, i - 1)] < price or price \
-           < prices[min(i + 1, len(prices) - 1)]:
-            print "Inserting:", price
-            parser.insert(price)
-        else:
-            print "Skipping:", price
-            parser.skip(price)
+    best_window = parser.process(prices)
 
-    parser.sift()
-
-    print parser.best_window
+    print best_window
 
 if __name__ == "__main__":
     main()
