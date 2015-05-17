@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 
-def find_points(prices, window):
+def find_profit(prices, window):
     pivot = None
     next_pivot = None
     profit = 0
@@ -16,7 +16,7 @@ def find_points(prices, window):
 
         if i - pivot == window:
             pivot = next_pivot
-            next_pivot = pivot + 1
+            next_pivot += 1
 
         profit = max(profit, price - prices[pivot])
 
@@ -24,11 +24,11 @@ def find_points(prices, window):
 
 
 def main():
-    print find_points([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5)
+    print find_profit([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5)
 
-    print find_points([7.0, 5.0, 6.0, 4.0, 5.0, 3.0, 4.0, 2.0, 3.0, 1.0], 5)
+    print find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0, 4.0, 2.0, 3.0, 1.0], 5)
 
-    print find_points([4.0, 3.0, 2.0, 4.0, 3.0, 1.0, 1.1, 1.2, 1.3, 3.4], 5)
+    print find_profit([4.0, 3.0, 2.0, 4.0, 3.0, 1.0, 1.1, 1.2, 1.3, 3.4], 5)
 
 if __name__ == "__main__":
     main()
