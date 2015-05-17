@@ -26,7 +26,7 @@ def find_profit(prices, window):
         if i - pivot == window:
             pivot = next_pivot
             pivot_price = next_price
-            next_pivot += 1
+            next_pivot = pivot + 1
             next_price = None
 
         profit = max(profit, price - pivot_price)
