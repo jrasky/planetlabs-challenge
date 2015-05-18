@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import unittest
 
 
 def find_profit(prices, window):
@@ -34,12 +35,16 @@ def find_profit(prices, window):
     return profit
 
 
-def main():
-    print find_profit([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5)
+class StockProfitTests(unittest.TestCase):
+    def testSimple(self):
+        self.assertEqual(find_profit([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5), 3.0)
 
-    print find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0, 4.0, 2.0, 3.0, 1.0], 5)
+        self.assertEqual(find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0,
+                                      4.0, 2.0, 3.0, 1.0], 5), 1.0)
 
-    print find_profit([4.0, 3.0, 2.0, 4.0, 3.0, 1.0, 1.1, 1.2, 1.3, 1.4], 5)
+        self.assertEqual(find_profit([4.0, 3.0, 2.0, 4.0, 3.0, 1.0,
+                                      1.1, 1.2, 1.3, 1.4], 5), 2.0)
+
 
 if __name__ == "__main__":
-    main()
+    unittest.main()
