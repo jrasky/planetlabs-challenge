@@ -65,13 +65,17 @@ class StockProfitTests(unittest.TestCase):
 
     def test_increase(self):
         """Test an increasing window size with a simple list"""
+
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2), 1.0)
+
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 3), 2.0)
+
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 4), 3.0)
 
     def test_window_sizes(self):
         """Test various difficult lists with window sizes larger than the best
         size possible"""
+
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5), 3.0)
 
         self.assertEqual(find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0,
@@ -83,14 +87,19 @@ class StockProfitTests(unittest.TestCase):
     def test_shifting(self):
         """Test a growing window, where each increase makes for a different
         profit"""
+
         self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
                                       8.0], 2), 2.0)
+
         self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
                                       8.0], 3), 3.0)
+
         self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
                                       8.0], 4), 5.0)
+
         self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
                                       8.0], 5), 6.0)
+
         self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
                                       8.0], 6), 7.0)
 
