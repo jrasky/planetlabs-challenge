@@ -19,7 +19,7 @@ def find_profit(prices, window):
         if i == next_pivot:
             next_price = price
 
-        if pivot != i and (next_pivot is None or price < next_price):
+        if next_pivot is None or price < next_price:
             next_pivot = i
             next_price = price
 
