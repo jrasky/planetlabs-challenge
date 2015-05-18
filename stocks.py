@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+"""find_profit is O(n) over a list, given a window, to find the maximum profit
+possible given a single pair of trades taking place in that window"""
 import unittest
 
 
@@ -57,14 +59,19 @@ def find_profit(prices, window):
     # return the accumulated profit once done
     return profit
 
-
+# pylint: disable=R0904
 class StockProfitTests(unittest.TestCase):
-    def testIncrease(self):
+    """Unit tests for the find_profit function"""
+
+    def test_increase(self):
+        """Test an increasing window size with a simple list"""
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 2), 1.0)
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 3), 2.0)
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], 4), 3.0)
 
-    def testSimple(self):
+    def test_window_sizes(self):
+        """Test various difficult lists with window sizes larger than the best
+        size possible"""
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5), 3.0)
 
         self.assertEqual(find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0,
@@ -72,6 +79,20 @@ class StockProfitTests(unittest.TestCase):
 
         self.assertEqual(find_profit([4.0, 3.0, 2.0, 4.0, 3.0, 1.0,
                                       1.1, 1.2, 1.3, 1.4], 5), 2.0)
+
+    def test_shifting(self):
+        """Test a growing window, where each increase makes for a different
+        profit"""
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
+                                      8.0], 2), 2.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
+                                      8.0], 3), 3.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
+                                      8.0], 4), 5.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
+                                      8.0], 5), 6.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
+                                      8.0], 6), 7.0)
 
 
 if __name__ == "__main__":
