@@ -78,30 +78,30 @@ class StockProfitTests(unittest.TestCase):
 
         self.assertEqual(find_profit([1.0, 2.0, 3.0, 1.0, 3.0, 4.0], 5), 3.0)
 
-        self.assertEqual(find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0,
-                                      4.0, 2.0, 3.0, 1.0], 5), 1.0)
+        self.assertEqual(find_profit([7.0, 5.0, 6.0, 4.0, 5.0, 3.0, 4.0, 2.0,
+                                      3.0, 1.0], 5), 1.0)
 
-        self.assertEqual(find_profit([4.0, 3.0, 2.0, 4.0, 3.0, 1.0,
-                                      1.1, 1.2, 1.3, 1.4], 5), 2.0)
+        self.assertEqual(find_profit([4.0, 3.0, 2.0, 4.0, 3.0, 1.0, 1.1, 1.2,
+                                      1.3, 1.4], 5), 2.0)
 
     def test_shifting(self):
         """Test a growing window, where each increase makes for a different
         profit"""
 
-        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
-                                      8.0], 2), 2.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0, 8.0],
+                                     2), 2.0)
 
-        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
-                                      8.0], 3), 3.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0, 8.0],
+                                     3), 3.0)
 
-        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
-                                      8.0], 4), 5.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0, 8.0],
+                                     4), 5.0)
 
-        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
-                                      8.0], 5), 6.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0, 8.0],
+                                     5), 6.0)
 
-        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0,
-                                      8.0], 6), 7.0)
+        self.assertEqual(find_profit([2.0, 3.0, 1.0, 2.0, 4.0, 5.0, 7.0, 8.0],
+                                     6), 7.0)
 
 
 if __name__ == "__main__":
