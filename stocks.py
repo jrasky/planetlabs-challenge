@@ -59,6 +59,7 @@ def find_profit(prices, window):
     # return the accumulated profit once done
     return profit
 
+
 # pylint: disable=R0904
 class StockProfitTests(unittest.TestCase):
     """Unit tests for the find_profit function"""
